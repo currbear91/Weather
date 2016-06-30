@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<!-- <link rel="stylesheet" type="text/css" href="bootstrap.min.css"> -->
+	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('#zipcode').submit(function(){
+			var cityZip = $('#zip').val();
+			var url = "http://api.openweathermap.org/data/2.5/weather?zip=" + cityZip + "&APPID=eeccc27f766fba0b0d53c24f16b883df";	
+
+
+
+			$.get(url, function (weather) {
+			    WEATHER = weather;
+			    console.log(weather);
+			    console.log(weather.main.temp);
+
+			    $('#right').append("<div class='weather'>"+ "<fieldset>" + "<legend>" + weather.name + "</legend>" + "<br>" + "Weather Description : " + weather.weather[0].description + "<br>" + "Temperarture : " + weather.main.temp + "</fieldset>" + "</div>");
+
+
+			});
+
+
+			return false
+		});	
+
+		$('#citystate').submit(function(){
+			var City = $('#city').val();
+			var State = $('#state').val();
+			var url = "http://api.openweathermap.org/data/2.5/weather?q=" + City + ",us-" + State + "&APPID=eeccc27f766fba0b0d53c24f16b883df";
+
+
+			$.get(url, function (weather) {
+			    WEATHER = weather;
+			    console.log(weather);
+			    console.log(weather.main.temp);
+			
+				$('#right').append("<div class='weather'>"+ "<fieldset>" + "<legend>" + weather.name + "</legend>" + "<br>" + "Weather Description : " + weather.weather[0].description + "<br>" + "Temperarture : " + weather.main.temp + "</fieldset>" + "</div>");
+
+			});
+
+			return false 
+		});
+		$(document).on('click','.weather', function(){
+			$(this).hide();
+		
+		});
+		
+
+			
+
+
+			
+			
+	});
+
+	</script>
+</head>
+<body>
+	<div id='container'>
+		<div id='left'>
+			<form id="zipcode">
+				<p>Zip Code</p>
+				<input id= "zip" type="text" name="zipcode" placeholder="Zip Code">
+				<input id= "zipsearch" type="submit"  value="Search" name="ZipSearch">
+				<br>
+				<br>
+				<br>
+				<h3>OR</h3>
+				<br>
+				<br>
+			</form>
+			<form id="citystate">
+				<p>City</p>
+				<input id="city" type="text" name="City" placeholder="City">
+				<p>State</p>
+				<input id="state" type="text" name="State" placeholder="State">
+				<input id= "CityState" type="submit" value="Search" name="submit">
+			</form>	
+		</div>
+		<div id='right'>
+			<h2>Weather Information</h2>
+		</div>
+	</div>
+</body>
+</html>
